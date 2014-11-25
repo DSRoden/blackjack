@@ -1,7 +1,7 @@
 'use strict';
 
 var Joi  = require('joi'),
-  User = require('../../../models/user');
+    User = require('../../../models/user');
 
 module.exports = {
   description: 'Login a User',
@@ -18,8 +18,9 @@ module.exports = {
   handler: function(request, reply){
     User.login(request.payload, function(user){
       if(user){
+        user.password = null;
         request.auth.session.set(user);
-        reply();
+        reply(user);
       }else {
         reply().code(401);
       }
