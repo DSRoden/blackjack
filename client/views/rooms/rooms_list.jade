@@ -1,16 +1,37 @@
-h1 ROOMS {{title}}
-
+h1 ROOMS
 .row
     .small-8.columns
         .row
             .small-12.columns
-                h3 Get a Room
+                h3 Create a Room
+                label(for='roomname') Room Name
+                input#username(type='text', name='roomname', ng-model='room.name', autofocus, ng-class='{error: error}')
+                label(for='password') Password
+                input#password(type='password', name='password', ng-model='room.password', ng-class='{error: error}')
+                button.success.tiny.radius(ng-click='createRoom(room)') Create Room
         .row
             .small-12.columns
                 h3 Room List
-    .small-4.columns
-        h3 Let's Chat
-        #messages.panel.callout.radius
-        input(type='text', ng-model='message')
-        button.success.tiny.radius(ng-click='chat(message)') Send
+                table
+                    thead
+                        th Owner
+                        th Name
+                        th Password
+                        th Join
+                    tbody
+                        tr(ng-repeat="room in rooms")
+                            td: img#avatarimg(ng-src='{{room.creator.avatar}}')
+                            td {{room.name}}
+                            td: input#password(type='password', name='password', ng-model='password')
+                            td: button.alert.tiny.radius(ng-click='join(room)') Join
 
+
+
+    .small-4.columns
+        h3 Global Chat
+        #messages.panel.callout.radius
+            .message(ng-repeat='message in messages')
+                .avatar(style='background-image:url("{{message.avatar}}")')
+                .content {{message.content}}
+        input#message(type='text', ng-model='message')
+        button.success.tiny.radius(ng-click='chat(message)') Send Message
