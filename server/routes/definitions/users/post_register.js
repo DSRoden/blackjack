@@ -20,8 +20,11 @@ module.exports = {
     console.log('inside handler');
     var user = new User(request.payload);
     user.encrypt();
-    user.download();
-    user.save(function(err){
-        reply().code(err ? 401 : 200);});
+    user.download(function(err){
+      console.log(err);
+      user.save(function(err){
+        reply().code(err ? 401 : 200);
+      });
+    });
   }
 };
